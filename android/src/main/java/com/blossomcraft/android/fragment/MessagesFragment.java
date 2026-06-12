@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -63,7 +64,10 @@ public class MessagesFragment extends Fragment implements ConversationAdapter.Li
         }, x -> {
             refresh.setRefreshing(false);
             adapter.submit(groups, people);
-        }, err -> refresh.setRefreshing(false));
+        }, err -> {
+            refresh.setRefreshing(false);
+            Toast.makeText(requireContext(), Async.message(err), Toast.LENGTH_LONG).show();
+        });
     }
 
     @Override

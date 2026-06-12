@@ -113,7 +113,7 @@ public class MessagesPage implements Page {
     private void loadPeople() {
         Async.run(() -> context.bc().profile().searchUsers(null),
                 list -> peopleList.getItems().setAll(list),
-                err -> { });
+                err -> peopleList.setPlaceholder(Ui.muted("Ошибка: " + Ui.message(err))));
     }
 
     private void loadDmThread(User peer) {
@@ -198,7 +198,7 @@ public class MessagesPage implements Page {
     private void loadGroups() {
         Async.run(() -> context.bc().groups().myGroups(),
                 list -> groupList.getItems().setAll(list),
-                err -> { });
+                err -> groupList.setPlaceholder(Ui.muted("Ошибка: " + Ui.message(err))));
     }
 
     private void loadGroupThread(Group g) {

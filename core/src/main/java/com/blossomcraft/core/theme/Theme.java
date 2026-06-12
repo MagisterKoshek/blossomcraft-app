@@ -5,8 +5,8 @@ package com.blossomcraft.core.theme;
  * expose the same options and persist the same identifiers.
  *
  * <ul>
- *   <li>{@link #DARK} — default purple/dark gradient.</li>
- *   <li>{@link #LIGHT} — light interface.</li>
+ *   <li>{@link #DARK} — default senku near-black + blue accent.</li>
+ *   <li>{@link #LIGHT} — clean white interface + blue accent.</li>
  *   <li>{@link #MIRROR} — translucent purple glassmorphism.</li>
  *   <li>{@link #GRAY_MIRROR} — neutral-gray glassmorphism.</li>
  * </ul>

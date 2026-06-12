@@ -34,11 +34,15 @@ public final class ThemePalette {
         this.glass = glass;
     }
 
+    /** Senku blue accent shared by the dark + white themes. */
+    public static final String BRAND_BLUE = "#3B82F6";
+    public static final String BRAND_BLUE_DEEP = "#2563EB";
+
     public static ThemePalette of(Theme theme) {
         switch (theme) {
             case LIGHT:
-                return new ThemePalette("#f5f3ff", "#1a1a2e", "#ffffff", "#d8d2e8",
-                        BRAND_PURPLE_DEEP, "#f0eef7", false);
+                return new ThemePalette("#FFFFFF", "#0A0A0B", "#F7F7F8", "#E4E4E7",
+                        BRAND_BLUE, "#6B6B73", false);
             case MIRROR:
                 return new ThemePalette("#0f041e", "#ece4f5", "#1a0b2e", "#3a2350",
                         BRAND_PURPLE, "#19102a", true);
@@ -47,8 +51,8 @@ public final class ThemePalette {
                         "#b4b4be", "#202024", true);
             case DARK:
             default:
-                return new ThemePalette("#07010f", "#e9def5", "#120a1f", "#2a1d3a",
-                        BRAND_PURPLE, "#150c24", false);
+                return new ThemePalette("#0A0A0B", "#F4F4F5", "#141416", "#26262A",
+                        BRAND_BLUE, "#8A8A93", false);
         }
     }
 

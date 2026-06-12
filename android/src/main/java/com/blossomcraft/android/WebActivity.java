@@ -113,7 +113,17 @@ public class WebActivity extends AppCompatActivity {
 
             @Override
             public void onPermissionRequest(PermissionRequest request) {
-                request.grant(request.getResources());
+                // Deny-by-default: only grant web permissions to our own trusted
+                // HTTPS origin, never to arbitrary cross-origin frames.
+                Uri origin = request.getOrigin();
+                String trustedHost = Uri.parse(ApiConfig.getSiteUrl()).getHost();
+                if (origin != null && trustedHost != null
+                        && "https".equalsIgnoreCase(origin.getScheme())
+                        && trustedHost.equalsIgnoreCase(origin.getHost())) {
+                    request.grant(request.getResources());
+                } else {
+                    request.deny();
+                }
             }
         });
 

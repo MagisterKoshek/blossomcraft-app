@@ -53,7 +53,10 @@ public class VideosFragment extends Fragment implements VideoAdapter.Listener {
         Async.run(() -> bc.videos().feed(), videos -> {
             refresh.setRefreshing(false);
             adapter.submit(videos);
-        }, err -> refresh.setRefreshing(false));
+        }, err -> {
+            refresh.setRefreshing(false);
+            Toast.makeText(requireContext(), Async.message(err), Toast.LENGTH_LONG).show();
+        });
     }
 
     @Override

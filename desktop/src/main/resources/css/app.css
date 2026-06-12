@@ -1,37 +1,37 @@
 /*
  * BlossomCraft desktop theme stylesheet.
  * Ports the website's index.css theme tokens to JavaFX: dark / light / mirror /
- * gray-mirror, plus the glass-card surfaces and brand purple accents.
+ * gray-mirror, plus the glass-card surfaces and the senku blue accent.
  * The active theme is selected by a root style-class set by ThemeManager.
  */
 
 .root {
     -fx-font-family: "Inter", "Segoe UI", sans-serif;
-    -bc-primary: #a855f7;
-    -bc-primary-deep: #9333ea;
-    -bc-primary-light: #c084fc;
+    -bc-primary: #3B82F6;
+    -bc-primary-deep: #2563EB;
+    -bc-primary-light: #60A5FA;
 }
 
-/* ── DARK (default) ─────────────────────────────────────────────────────── */
+/* ── DARK (default) — senku near-black + blue accent ────────────────────── */
 .theme-dark {
-    -bc-bg: #07010f;
-    -bc-bg2: #150c24;
-    -bc-fg: #e9def5;
-    -bc-card: rgba(25, 10, 45, 0.48);
-    -bc-surface: rgba(10, 3, 20, 0.9);
-    -bc-border: rgba(255, 255, 255, 0.08);
-    -bc-muted: #9b8bb5;
+    -bc-bg: #0A0A0B;
+    -bc-bg2: #0E0E10;
+    -bc-fg: #F4F4F5;
+    -bc-card: rgba(20, 20, 22, 0.6);
+    -bc-surface: rgba(14, 14, 16, 0.9);
+    -bc-border: #26262A;
+    -bc-muted: #8A8A93;
 }
 
-/* ── LIGHT ──────────────────────────────────────────────────────────────── */
+/* ── LIGHT — senku white + blue accent ──────────────────────────────────── */
 .theme-light {
-    -bc-bg: #f5f3ff;
-    -bc-bg2: #ece7fb;
-    -bc-fg: #1a1a2e;
-    -bc-card: rgba(255, 255, 255, 0.9);
+    -bc-bg: #FFFFFF;
+    -bc-bg2: #F7F7F8;
+    -bc-fg: #0A0A0B;
+    -bc-card: rgba(247, 247, 248, 0.9);
     -bc-surface: rgba(255, 255, 255, 0.92);
-    -bc-border: rgba(155, 48, 255, 0.2);
-    -bc-muted: #4a4a6a;
+    -bc-border: #E4E4E7;
+    -bc-muted: #6B6B73;
 }
 
 /* ── MIRROR (translucent purple glass) ──────────────────────────────────── */
@@ -102,7 +102,7 @@
 
 .neon {
     -fx-text-fill: -bc-primary-light;
-    -fx-effect: dropshadow(gaussian, rgba(168, 85, 247, 0.7), 12, 0.3, 0, 0);
+    -fx-effect: dropshadow(gaussian, rgba(59, 130, 246, 0.7), 12, 0.3, 0, 0);
 }
 
 /* ── Cards ──────────────────────────────────────────────────────────────── */
@@ -129,11 +129,11 @@
 }
 
 .nav-item:hover {
-    -fx-background-color: rgba(168, 85, 247, 0.15);
+    -fx-background-color: rgba(59, 130, 246, 0.15);
 }
 
 .nav-item-active {
-    -fx-background-color: rgba(168, 85, 247, 0.28);
+    -fx-background-color: rgba(59, 130, 246, 0.28);
     -fx-text-fill: -bc-primary-light;
 }
 
@@ -141,13 +141,13 @@
 .button {
     -fx-background-radius: 10;
     -fx-text-fill: -bc-fg;
-    -fx-background-color: rgba(168, 85, 247, 0.18);
+    -fx-background-color: rgba(59, 130, 246, 0.18);
     -fx-cursor: hand;
     -fx-padding: 8 16;
 }
 
 .button:hover {
-    -fx-background-color: rgba(168, 85, 247, 0.32);
+    -fx-background-color: rgba(59, 130, 246, 0.32);
 }
 
 .btn-primary {
@@ -157,7 +157,7 @@
 }
 
 .btn-primary:hover {
-    -fx-effect: dropshadow(gaussian, rgba(168, 85, 247, 0.6), 18, 0.3, 0, 0);
+    -fx-effect: dropshadow(gaussian, rgba(59, 130, 246, 0.6), 18, 0.3, 0, 0);
 }
 
 /* ── Inputs ─────────────────────────────────────────────────────────────── */
@@ -189,7 +189,7 @@
 }
 
 .list-cell:selected {
-    -fx-background-color: rgba(168, 85, 247, 0.22);
+    -fx-background-color: rgba(59, 130, 246, 0.22);
     -fx-background-radius: 10;
 }
 

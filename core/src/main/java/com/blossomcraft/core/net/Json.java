@@ -26,13 +26,27 @@ public final class Json {
     private Json() {
     }
 
-    /** Deserialise the named array member of {@code obj} into a typed list. */
+    /**
+     * Deserialise an array member of {@code obj} into a typed list. The array is
+     * looked up under {@code key} first; if absent it falls back to {@code "data"}
+     * — which is where {@link ApiClient} wraps a response that was itself a bare
+     * top-level array. This keeps the list from being silently empty when the live
+     * server returns {@code [...]} instead of {@code {"key": [...]}}.
+     */
     public static <T> List<T> list(JsonObject obj, String key, Class<T> type) {
         List<T> out = new ArrayList<>();
-        if (obj == null || !obj.has(key) || !obj.get(key).isJsonArray()) {
+        if (obj == null) {
             return out;
         }
-        JsonArray array = obj.getAsJsonArray(key);
+        JsonArray array = null;
+        if (obj.has(key) && obj.get(key).isJsonArray()) {
+            array = obj.getAsJsonArray(key);
+        } else if (obj.has("data") && obj.get("data").isJsonArray()) {
+            array = obj.getAsJsonArray("data");
+        }
+        if (array == null) {
+            return out;
+        }
         for (JsonElement element : array) {
             out.add(GSON.fromJson(element, type));
         }
