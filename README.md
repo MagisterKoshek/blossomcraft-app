@@ -203,18 +203,32 @@ The token is stored in `SharedPreferences` (key `auth_token`, mirroring the
 website). Navigation uses a bottom bar: Shop, Music, Videos, Chats, Profile.
 Theme and API host are configurable from the Profile tab.
 
-### Google sign-in (Android)
+### Google sign-in (Android & desktop)
 
-The email/password and token flows work out of the box. The native Google flow
-needs an OAuth client id:
+Google refuses OAuth inside embedded WebViews, so the app does **not** run the
+Google popup in the WebView. Instead it reuses the website's own (already
+working) Google login through a system-browser handoff — **no extra Google Cloud
+setup is required**, only the website itself must be deployed with this build.
 
-1. Create an OAuth 2.0 Web client id in Google Cloud (same project the website
-   uses for `google_auth.php`).
-2. Wire `play-services-auth` in `AuthActivity.startGoogleSignIn()` to obtain an
-   access token, then call `bc.auth().googleAuth("login", accessToken)` (the
-   integration point is marked in the code).
+How it works:
 
-The desktop app accepts a pasted Google access token for the same exchange.
+1. The WebView appends a `BlossomCraftApp` marker to its user-agent. The web page
+   detects it and, when the user taps **«Войти через Google»**, navigates to
+   `blossomcraft://google-login` instead of opening the (blocked) popup.
+2. The app intercepts that signal and opens the user's **real system browser** on
+   `<site>/login?app_auth=1&redirect=<callback>&state=<nonce>`.
+   - Android `redirect` = `blossomcraft://auth` (a deep link handled by
+     `WebActivity`).
+   - Desktop `redirect` = `http://127.0.0.1:<port>/cb` (a one-shot loopback
+     listener opened by `DesktopApp`).
+3. In the system browser the user completes the normal website Google sign-in.
+   The site then redirects the issued **session token** back to `redirect`.
+4. The app verifies the `state` nonce, injects the token into the WebView's
+   `localStorage` (`auth_token`) and reloads — signed in with the exact same
+   session the website issues. Email/password login uses the same handoff.
+
+No OAuth client id needs to be wired into the native code: the existing Web
+Client id baked into the website handles verification in `google_auth.php`.
 
 ---
 
