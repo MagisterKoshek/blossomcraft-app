@@ -1,0 +1,17 @@
+// Root build file for the BlossomCraft native app monorepo.
+// Shared configuration for all JVM subprojects (:core, :desktop).
+// The :android module manages its own toolchain via the Android Gradle Plugin.
+
+subprojects {
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+
+ext {
+    // Library versions shared across modules.
+    gsonVersion = '2.10.1'
+    junitVersion = '5.10.2'
+    javafxVersion = '21.0.2'
+}

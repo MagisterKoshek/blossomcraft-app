@@ -1,0 +1,41 @@
+pluginManagement {
+    repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+    }
+}
+
+dependencyResolutionManagement {
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+
+rootProject.name = 'BlossomCraftApp'
+
+include ':core'
+include ':desktop'
+
+// The Android module requires the Android SDK + Android Gradle Plugin.
+// It is included only when an Android SDK is available (local.properties present
+// or ANDROID_HOME set), so that `:core` and `:desktop` can be built on machines
+// without the Android toolchain.
+def androidHome = System.getenv('ANDROID_HOME')
+if (androidHome == null || androidHome.trim().isEmpty()) {
+    androidHome = System.getenv('ANDROID_SDK_ROOT')
+}
+// Treat a blank value as "absent" so CI jobs that build only :desktop can opt out
+// by exporting ANDROID_HOME='' (otherwise :android would be configured and fail
+// without the right SDK platform installed).
+def hasAndroidSdk = file('local.properties').exists() ||
+        (androidHome != null && !androidHome.trim().isEmpty())
+if (hasAndroidSdk) {
+    include ':android'
+} else {
+    gradle.rootProject {
+        logger.lifecycle('[BlossomCraftApp] Android SDK not detected — skipping :android module. ' +
+                'Add local.properties (sdk.dir=...) or set ANDROID_HOME to enable it.')
+    }
+}

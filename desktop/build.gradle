@@ -1,0 +1,28 @@
+plugins {
+    id 'application'
+    id 'org.openjfx.javafxplugin' version '0.1.0'
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
+javafx {
+    version = rootProject.ext.javafxVersion
+    modules = ['javafx.controls', 'javafx.graphics', 'javafx.media', 'javafx.web']
+}
+
+dependencies {
+    implementation project(':core')
+}
+
+application {
+    mainClass = 'com.blossomcraft.desktop.DesktopApp'
+    // Allow overriding the API base URL when running, e.g.:
+    //   ./gradlew :desktop:run -Dblossomcraft.api.base=https://your-host/api
+    applicationDefaultJvmArgs = [
+            "-Dblossomcraft.api.base=" + (project.findProperty('blossomcraft.api.base') ?: 'https://bc-shop.duckdns.org/api')
+    ]
+}

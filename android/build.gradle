@@ -1,0 +1,52 @@
+plugins {
+    id 'com.android.application' version '8.5.2'
+}
+
+android {
+    namespace 'com.blossomcraft.android'
+    compileSdk 34
+
+    defaultConfig {
+        applicationId 'com.blossomcraft.android'
+        minSdk 24
+        targetSdk 34
+        versionCode 1
+        versionName '1.0'
+
+        // The API base URL is injected as a string resource and read at startup.
+        // Override per build, e.g.:
+        //   ./gradlew :android:assembleDebug -Pblossomcraft.api.base=https://your-host/api
+        resValue 'string', 'api_base_url',
+                (project.findProperty('blossomcraft.api.base') ?: 'https://bc-shop.duckdns.org/api')
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        // core-library desugaring lets the shared :core module use java.time / java.net.http-free APIs.
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+        coreLibraryDesugaringEnabled true
+    }
+}
+
+dependencies {
+    implementation project(':core')
+
+    implementation 'androidx.appcompat:appcompat:1.7.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation 'androidx.recyclerview:recyclerview:1.3.2'
+    implementation 'androidx.cardview:cardview:1.0.0'
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
+    implementation 'com.google.android.material:material:1.12.0'
+
+    // Google Sign-In for the native Google auth flow.
+    implementation 'com.google.android.gms:play-services-auth:21.2.0'
+
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.0.4'
+}

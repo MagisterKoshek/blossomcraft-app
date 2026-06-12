@@ -1,7 +1,11 @@
-build/
 .gradle/
+build/
+*/build/
+local.properties
 .idea/
 *.iml
-local.properties
-node_modules/
-.kotlin/
+.DS_Store
+captures/
+.cxx/
+out/
+bin/

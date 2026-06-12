@@ -1,0 +1,213 @@
+/*
+ * BlossomCraft desktop theme stylesheet.
+ * Ports the website's index.css theme tokens to JavaFX: dark / light / mirror /
+ * gray-mirror, plus the glass-card surfaces and brand purple accents.
+ * The active theme is selected by a root style-class set by ThemeManager.
+ */
+
+.root {
+    -fx-font-family: "Inter", "Segoe UI", sans-serif;
+    -bc-primary: #a855f7;
+    -bc-primary-deep: #9333ea;
+    -bc-primary-light: #c084fc;
+}
+
+/* ── DARK (default) ─────────────────────────────────────────────────────── */
+.theme-dark {
+    -bc-bg: #07010f;
+    -bc-bg2: #150c24;
+    -bc-fg: #e9def5;
+    -bc-card: rgba(25, 10, 45, 0.48);
+    -bc-surface: rgba(10, 3, 20, 0.9);
+    -bc-border: rgba(255, 255, 255, 0.08);
+    -bc-muted: #9b8bb5;
+}
+
+/* ── LIGHT ──────────────────────────────────────────────────────────────── */
+.theme-light {
+    -bc-bg: #f5f3ff;
+    -bc-bg2: #ece7fb;
+    -bc-fg: #1a1a2e;
+    -bc-card: rgba(255, 255, 255, 0.9);
+    -bc-surface: rgba(255, 255, 255, 0.92);
+    -bc-border: rgba(155, 48, 255, 0.2);
+    -bc-muted: #4a4a6a;
+}
+
+/* ── MIRROR (translucent purple glass) ──────────────────────────────────── */
+.theme-mirror {
+    -bc-bg: #0f041e;
+    -bc-bg2: #190a2d;
+    -bc-fg: #ece4f5;
+    -bc-card: rgba(255, 255, 255, 0.05);
+    -bc-surface: rgba(10, 3, 20, 0.42);
+    -bc-border: rgba(168, 85, 247, 0.25);
+    -bc-muted: #b9a8d4;
+}
+
+/* ── GRAY-MIRROR (neutral glass) ────────────────────────────────────────── */
+.theme-gray-mirror {
+    -bc-bg: #141418;
+    -bc-bg2: #1d1d22;
+    -bc-fg: #e9e9ee;
+    -bc-card: rgba(255, 255, 255, 0.04);
+    -bc-surface: rgba(20, 20, 24, 0.45);
+    -bc-border: rgba(180, 180, 190, 0.22);
+    -bc-muted: #aeaeb8;
+}
+
+/* ── Base surfaces ──────────────────────────────────────────────────────── */
+.app-root {
+    -fx-background-color: linear-gradient(to bottom right, -bc-bg, -bc-bg2);
+}
+
+.app-surface {
+    -fx-background-color: -bc-surface;
+    -fx-background-radius: 0;
+}
+
+.sidebar {
+    -fx-background-color: -bc-surface;
+    -fx-padding: 14;
+    -fx-spacing: 6;
+    -fx-min-width: 220;
+    -fx-pref-width: 220;
+}
+
+.content {
+    -fx-padding: 24;
+    -fx-background-color: transparent;
+}
+
+.h1 {
+    -fx-font-size: 26px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -bc-fg;
+}
+
+.h2 {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -bc-fg;
+}
+
+.label {
+    -fx-text-fill: -bc-fg;
+}
+
+.muted {
+    -fx-text-fill: -bc-muted;
+    -fx-font-size: 12px;
+}
+
+.neon {
+    -fx-text-fill: -bc-primary-light;
+    -fx-effect: dropshadow(gaussian, rgba(168, 85, 247, 0.7), 12, 0.3, 0, 0);
+}
+
+/* ── Cards ──────────────────────────────────────────────────────────────── */
+.glass-card {
+    -fx-background-color: -bc-card;
+    -fx-background-radius: 14;
+    -fx-border-radius: 14;
+    -fx-border-color: -bc-border;
+    -fx-border-width: 1;
+    -fx-padding: 16;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 18, 0.1, 0, 6);
+}
+
+/* ── Navigation items ───────────────────────────────────────────────────── */
+.nav-item {
+    -fx-background-color: transparent;
+    -fx-text-fill: -bc-fg;
+    -fx-alignment: center-left;
+    -fx-padding: 10 14;
+    -fx-background-radius: 10;
+    -fx-font-size: 13px;
+    -fx-cursor: hand;
+    -fx-max-width: infinity;
+}
+
+.nav-item:hover {
+    -fx-background-color: rgba(168, 85, 247, 0.15);
+}
+
+.nav-item-active {
+    -fx-background-color: rgba(168, 85, 247, 0.28);
+    -fx-text-fill: -bc-primary-light;
+}
+
+/* ── Buttons ────────────────────────────────────────────────────────────── */
+.button {
+    -fx-background-radius: 10;
+    -fx-text-fill: -bc-fg;
+    -fx-background-color: rgba(168, 85, 247, 0.18);
+    -fx-cursor: hand;
+    -fx-padding: 8 16;
+}
+
+.button:hover {
+    -fx-background-color: rgba(168, 85, 247, 0.32);
+}
+
+.btn-primary {
+    -fx-background-color: linear-gradient(to bottom right, -bc-primary-deep, -bc-primary-light);
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+.btn-primary:hover {
+    -fx-effect: dropshadow(gaussian, rgba(168, 85, 247, 0.6), 18, 0.3, 0, 0);
+}
+
+/* ── Inputs ─────────────────────────────────────────────────────────────── */
+.text-field, .password-field, .text-area {
+    -fx-background-color: -bc-card;
+    -fx-text-fill: -bc-fg;
+    -fx-prompt-text-fill: -bc-muted;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-border-color: -bc-border;
+    -fx-border-width: 1;
+    -fx-padding: 8 12;
+}
+
+.text-field:focused, .password-field:focused, .text-area:focused {
+    -fx-border-color: -bc-primary;
+}
+
+/* ── Lists ──────────────────────────────────────────────────────────────── */
+.list-view {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+.list-cell {
+    -fx-background-color: transparent;
+    -fx-text-fill: -bc-fg;
+    -fx-padding: 6;
+}
+
+.list-cell:selected {
+    -fx-background-color: rgba(168, 85, 247, 0.22);
+    -fx-background-radius: 10;
+}
+
+/* ── Chat bubbles ───────────────────────────────────────────────────────── */
+.bubble-in {
+    -fx-background-color: -bc-card;
+    -fx-background-radius: 14;
+    -fx-padding: 8 12;
+    -fx-text-fill: -bc-fg;
+}
+
+.bubble-out {
+    -fx-background-color: linear-gradient(to bottom right, -bc-primary-deep, -bc-primary-light);
+    -fx-background-radius: 14;
+    -fx-padding: 8 12;
+    -fx-text-fill: white;
+}
+
+.scroll-pane, .scroll-pane > .viewport {
+    -fx-background-color: transparent;
+}

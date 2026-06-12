@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">BlossomCraft</string>
+
+    <string name="login">Войти</string>
+    <string name="register">Регистрация</string>
+    <string name="no_account">Нет аккаунта? Зарегистрироваться</string>
+    <string name="have_account">Уже есть аккаунт? Войти</string>
+    <string name="login_failed">Ошибка входа</string>
+    <string name="google_sign_in">Войти через Google</string>
+    <string name="google_hint">Настройте OAuth client id (см. README), чтобы включить вход через Google.</string>
+
+    <string name="hint_name">Имя</string>
+    <string name="hint_email">Email</string>
+    <string name="hint_password">Пароль</string>
+    <string name="hint_message">Сообщение…</string>
+    <string name="send">Отправить</string>
+    <string name="save">Сохранить</string>
+    <string name="logout">Выйти</string>
+
+    <string name="tab_shop">Магазин</string>
+    <string name="tab_music">Музыка</string>
+    <string name="tab_videos">Видео</string>
+    <string name="tab_messages">Чаты</string>
+    <string name="tab_profile">Профиль</string>
+
+    <string name="music_all">Все</string>
+    <string name="music_top">Топ</string>
+    <string name="music_fav">Избранное</string>
+    <string name="music_mine">Мои</string>
+    <string name="nothing_playing">Ничего не играет</string>
+
+    <string name="theme">Тема</string>
+    <string name="api_base">Адрес API</string>
+    <string name="save_api">Сохранить адрес API</string>
+    <string name="bio">О себе</string>
+    <string name="avatar_emoji">Эмодзи аватара</string>
+    <string name="avatar_color">Цвет аватара (#hex)</string>
+</resources>

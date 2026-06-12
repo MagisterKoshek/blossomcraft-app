@@ -1,0 +1,21 @@
+plugins {
+    id 'java-library'
+}
+
+java {
+    toolchain {
+        // Java 17 keeps the core compatible with both JavaFX desktop and Android (desugaring).
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+    withSourcesJar()
+}
+
+dependencies {
+    api "com.google.code.gson:gson:${rootProject.ext.gsonVersion}"
+
+    testImplementation "org.junit.jupiter:junit-jupiter:${rootProject.ext.junitVersion}"
+}
+
+test {
+    useJUnitPlatform()
+}

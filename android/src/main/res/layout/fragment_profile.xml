@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <TextView
+            android:id="@+id/profile_header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/primary"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="20dp" />
+
+        <EditText
+            android:id="@+id/profile_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/hint_name"
+            android:textColorHint="@color/muted"
+            android:textColor="@color/on_bg"
+            android:layout_marginBottom="10dp" />
+
+        <EditText
+            android:id="@+id/profile_emoji"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/avatar_emoji"
+            android:textColorHint="@color/muted"
+            android:textColor="@color/on_bg"
+            android:layout_marginBottom="10dp" />
+
+        <EditText
+            android:id="@+id/profile_color"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/avatar_color"
+            android:textColorHint="@color/muted"
+            android:textColor="@color/on_bg"
+            android:layout_marginBottom="10dp" />
+
+        <EditText
+            android:id="@+id/profile_bio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/bio"
+            android:textColorHint="@color/muted"
+            android:textColor="@color/on_bg"
+            android:minLines="3"
+            android:gravity="top"
+            android:layout_marginBottom="14dp" />
+
+        <Button
+            android:id="@+id/profile_save"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/save"
+            android:backgroundTint="@color/primary"
+            android:textColor="@color/white"
+            android:layout_marginBottom="24dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/theme"
+            android:textColor="@color/muted" />
+
+        <Spinner
+            android:id="@+id/profile_theme"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/api_base"
+            android:textColor="@color/muted" />
+
+        <EditText
+            android:id="@+id/profile_api"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/on_bg"
+            android:inputType="textUri"
+            android:layout_marginBottom="10dp" />
+
+        <Button
+            android:id="@+id/profile_save_api"
+            style="?attr/materialButtonOutlinedStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/save_api"
+            android:layout_marginBottom="24dp" />
+
+        <Button
+            android:id="@+id/profile_admin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Админ-панель"
+            android:backgroundTint="@color/primary"
+            android:textColor="@color/white"
+            android:visibility="gone"
+            android:layout_marginBottom="14dp" />
+
+        <Button
+            android:id="@+id/profile_logout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/logout"
+            android:backgroundTint="@color/primary_dark"
+            android:textColor="@color/white" />
+    </LinearLayout>
+</ScrollView>
