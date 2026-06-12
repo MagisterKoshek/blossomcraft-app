@@ -1,0 +1,107 @@
+name: Build BlossomCraft apps
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main, master ]
+
+env:
+  BC_API_BASE: https://bc-shop.duckdns.org/api
+
+jobs:
+  android:
+    name: Android APK
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Accept licenses & install SDK packages
+        run: |
+          yes | sdkmanager --licenses > /dev/null 2>&1 || true
+          sdkmanager "platform-tools" "platforms;android-34" "build-tools;34.0.0"
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.9'
+
+      - name: Build debug APK
+        run: gradle :android:assembleDebug -Pblossomcraft.api.base=$BC_API_BASE --no-daemon --stacktrace
+
+      - name: Collect APK
+        run: |
+          mkdir -p out
+          cp android/build/outputs/apk/debug/*.apk out/BlossomCraft-Android.apk
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: BlossomCraft-Android-APK
+          path: out/BlossomCraft-Android.apk
+
+  windows:
+    name: Windows EXE
+    runs-on: windows-latest
+    env:
+      ANDROID_HOME: ''
+      ANDROID_SDK_ROOT: ''
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.9'
+
+      - name: Build runtime layout (installDist)
+        run: gradle :desktop:installDist "-Pblossomcraft.api.base=${{ env.BC_API_BASE }}" --no-daemon --stacktrace
+
+      - name: Package portable app (BlossomCraft.exe inside)
+        shell: pwsh
+        run: |
+          jpackage `
+            --name BlossomCraft `
+            --input desktop/build/install/desktop/lib `
+            --main-jar desktop.jar `
+            --main-class com.blossomcraft.desktop.Launcher `
+            --java-options "-Dblossomcraft.api.base=${{ env.BC_API_BASE }}" `
+            --type app-image `
+            --dest dist
+          Compress-Archive -Path dist/BlossomCraft/* -DestinationPath dist/BlossomCraft-Windows.zip -Force
+
+      - name: Try MSI installer (optional, needs WiX)
+        shell: pwsh
+        continue-on-error: true
+        run: |
+          jpackage `
+            --name BlossomCraft `
+            --input desktop/build/install/desktop/lib `
+            --main-jar desktop.jar `
+            --main-class com.blossomcraft.desktop.Launcher `
+            --java-options "-Dblossomcraft.api.base=${{ env.BC_API_BASE }}" `
+            --win-menu --win-shortcut `
+            --type msi `
+            --dest dist
+
+      - name: Upload Windows build
+        uses: actions/upload-artifact@v4
+        with:
+          name: BlossomCraft-Windows
+          path: |
+            dist/BlossomCraft-Windows.zip
+            dist/*.msi
