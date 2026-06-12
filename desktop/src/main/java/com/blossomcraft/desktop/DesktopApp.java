@@ -1,94 +1,53 @@
 package com.blossomcraft.desktop;
 
-import com.blossomcraft.core.model.User;
-import com.blossomcraft.desktop.theme.ThemeManager;
-import com.blossomcraft.desktop.ui.AuthScreen;
-import com.blossomcraft.desktop.ui.MainShell;
+import com.blossomcraft.core.ApiConfig;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
-import javafx.scene.control.Label;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 
 /**
- * Desktop (PC) entry point for the BlossomCraft native app.
+ * Desktop (PC) entry point for the BlossomCraft app.
  *
- * <p>On launch it tries to restore the session from a stored token. If a valid
- * session exists it opens the {@link MainShell}; otherwise it shows the
- * {@link AuthScreen}. Theme selection and routing live in those components.</p>
+ * <p>The desktop app embeds the live BlossomCraft website inside a JavaFX
+ * {@link WebView}, so the interface and every feature match the site exactly —
+ * it <em>is</em> the site, running in a real application window. The site URL is
+ * derived from the configured API base ({@link ApiConfig#getSiteUrl()}).</p>
  *
  * <p>Run with:
  * {@code ./gradlew :desktop:run -Pblossomcraft.api.base=https://your-host/api}</p>
  */
 public class DesktopApp extends Application {
 
-    private final AppContext context = new AppContext();
-    private Stage stage;
-    private Scene scene;
+    /** A standard desktop Chrome user agent (helps site compatibility and sign-in). */
+    private static final String DESKTOP_USER_AGENT =
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+                    + "(KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36";
 
     @Override
     public void start(Stage primaryStage) {
-        this.stage = primaryStage;
         primaryStage.setTitle("BlossomCraft");
-        primaryStage.setMinWidth(960);
-        primaryStage.setMinHeight(640);
+        primaryStage.setMinWidth(1024);
+        primaryStage.setMinHeight(700);
 
-        StackPane bootstrap = new StackPane(new Label("Загрузка..."));
-        bootstrap.getStyleClass().addAll("app-root", "content");
-        scene = new Scene(bootstrap, 1180, 760);
-        ThemeManager.install(scene);
-        applyTheme(bootstrap);
+        WebView webView = new WebView();
+        WebEngine engine = webView.getEngine();
+        engine.setJavaScriptEnabled(true);
+        engine.setUserAgent(DESKTOP_USER_AGENT);
+        engine.load(ApiConfig.getSiteUrl());
+
+        StackPane root = new StackPane(webView);
+        Scene scene = new Scene(root, 1280, 820);
         primaryStage.setScene(scene);
+        primaryStage.setMaximized(true);
         primaryStage.show();
-
-        // Restore session in the background, then route to the right screen.
-        Async.run(
-                context.bc()::restoreSession,
-                this::route,
-                err -> route(null));
-    }
-
-    private void route(User user) {
-        if (user != null) {
-            showMain();
-        } else {
-            showAuth();
-        }
-    }
-
-    public void showAuth() {
-        AuthScreen auth = new AuthScreen(context, this::showMain);
-        setRoot(auth.getRoot());
-    }
-
-    public void showMain() {
-        MainShell shell = new MainShell(context, this::onLogout);
-        setRoot(shell.getRoot());
-    }
-
-    private void onLogout() {
-        Async.run(context.bc().auth()::logout, () -> {
-            context.bc().clearSession();
-            showAuth();
-        }, err -> {
-            context.bc().clearSession();
-            showAuth();
-        });
-    }
-
-    private void setRoot(javafx.scene.Parent root) {
-        applyTheme(root);
-        scene.setRoot(root);
-    }
-
-    private void applyTheme(javafx.scene.Parent root) {
-        ThemeManager.apply(root, context.theme());
     }
 
     @Override
     public void stop() {
-        Async.shutdown();
         Platform.exit();
     }
 

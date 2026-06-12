@@ -44,6 +44,19 @@ public final class ApiConfig {
         return baseUrl;
     }
 
+    /**
+     * Website root URL — the live site that the native apps embed in a web view.
+     * Derived from the API base by dropping a trailing {@code /api} segment,
+     * e.g. {@code https://host/api} -> {@code https://host}.
+     */
+    public static String getSiteUrl() {
+        String b = baseUrl;
+        if (b.endsWith("/api")) {
+            return b.substring(0, b.length() - "/api".length());
+        }
+        return b;
+    }
+
     /** Override the API base URL at runtime (e.g. from an in-app settings screen). */
     public static void setBaseUrl(String value) {
         if (value == null || value.isBlank()) {
